@@ -1,0 +1,7 @@
+@font-face {
+    font-family: 'press_start_2pregular';
+    src: url('https://cwilliamson29.github.io/Calculator/css/pressstart2p-regular-webfont.woff2') format('woff2'),
+         url('https://cwilliamson29.github.io/Calculator/css/pressstart2p-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
