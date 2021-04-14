@@ -56,7 +56,8 @@ document.addEventListener('keypress', (e) =>{
 
 //Operator Functions
 document.getElementById('opPlus').addEventListener('click', () => {operate("+"); updateScreen()});
-document.getElementById('opEquals').addEventListener('click', () => {equals("="); updateScreen()});
+document.getElementById('opMinus').addEventListener('click', () => {operate("-"); updateScreen()});
+document.getElementById('opEquals').addEventListener('click', () => {equals(); updateScreen()});
 
 
 function operate(a){
@@ -71,25 +72,60 @@ function operate(a){
     ++p;
 }
 
-function equals(a){
+function equals(){
+    screenNum = Number(screen);
+    history.push({number:screenNum, operator: ''});
+
+    let stringExpression = "";
+
+    for(y = 0; y < history.length;){
+        stringExpression = stringExpression + history[y].number + history[y].operator;
+        ++y;
+    }
+    
+    equalsTotal = eval(stringExpression);
+    screen = equalsTotal;
+}
+
+
+/*function equals(a){
 
     screenNum = Number(screen);
     history.push({number:screenNum, operator: a});
 
     let g = history.length -1;
 
-    let h = 0;
+    let j = 0;
 
-    for (let j = 0; j < history.length;){
+    //let num1 = history[j].number;
+
+    for (j = 0; j < history.length;){
 
         let num1 = history[j].number;
 
-        if (history[j].operator === "+"){
+        if(equalsTotal === undefined){
+            equalsTotal = num1;
+        }else{
+            if (history[j].operator === "+"){
+                equalsTotal = equalsTotal + num1;
+
+            }else if(history[j].operator === "-"){
+                equalsTotal = equalsTotal - num1;
+    
+            }else if(history[j].operator === "="){
+                equalsTotal = equalsTotal;
+            }
+        }
+
+
+        /*if (history[j].operator === "+"){
             if(equalsTotal === undefined){
                 equalsTotal = num1;
             }else{
                 equalsTotal = equalsTotal + num1;
             }
+        }else if(history[j].operator === "-"){
+            equalsTotal = equalsTotal - num1;
 
         }else if(history[j].operator === "="){
             equalsTotal = equalsTotal + num1;
@@ -98,7 +134,7 @@ function equals(a){
     }
     console.log(equalsTotal);
     screen = equalsTotal;
-}
+}*/
 /*
 //add 2 numbers together
 let add = (a, b) => {screenTotal = a + b;};
