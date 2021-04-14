@@ -1,67 +1,111 @@
 let screen = "";
-let screenNum;
+let screenNum; 
 
 let screentotal;
 //let history = [{number:0,operator:0}];
-let history = [];
 let equalsTotal;
 let stringExpression = "";
+let num1, num2, total;
+var operator;
 
 //screen functions
 let updateScreen = () => {document.getElementById('screen').innerHTML = screen;}
 
 let clear = () => {
     screen = ""; 
-    screenNum = Number(screen); 
+    screenNum = Number(screen);
+    num1 = undefined;
+    num2 = undefined;
+    total = undefined;
     updateScreen()
-};
-
-let clrHistory = () => {
-    history.length = 0; 
-    equalsTotal = undefined; 
-    p=0;
 };
 
 let updateScreenNums = (a) => {
     screen = screen + a;
-    screenNum = Number(screen)
+    
+    document.getElementById('screen').innerHTML = screen;
+    
+    if(a === "+"){
+    	operator = add;
+    }else if(a === "-"){
+    	operator = subtract;
+    }else if(a === "/"){
+    	operator = divide;
+    }else if(a === "*"){
+    	operator = multiply;
+    }else{
+    	if(num1 === undefined){
+      	num1 = a;
+        console.log(num1 + " first if");
+      }else if(num2 === undefined){
+      	num2 = a;
+        operator(num1, num2)
+        console.log(num1 + " second if");
+      }else{
+      	num2 = a;
+        operator(num1, num2)
+        console.log(num1 + " third if");
+      }
+    }
+      
 };
+
+function equals(){
+	total = num1;
+  screen = total;
+  document.getElementById('screen').innerHTML = screen;
+}
 
 document.getElementById('opEquals').addEventListener('click', () => {document.getElementById('screen').innerHTML = screenNum;})
 
 //clear the screen function
-document.getElementById('clrBtn').addEventListener('click', () => {clear(); clrHistory();});
+document.getElementById('clrBtn').addEventListener('click', () => {
+    clear(); 
+    clrHistory();
+});
 document.addEventListener('keydown', (e) => {
     if(e.code === "Escape"){
-        clear(); clrHistory();
+        clear();
     }
 });
 
 //Div Click Listeners
-document.getElementById('num7').addEventListener('click', () => {updateScreenNums("7"); updateScreen()});
-document.getElementById('num8').addEventListener('click', () => {updateScreenNums("8"); updateScreen()});
-document.getElementById('num9').addEventListener('click', () => {updateScreenNums("9"); updateScreen()});
-document.getElementById('num4').addEventListener('click', () => {updateScreenNums("4"); updateScreen()});
-document.getElementById('num5').addEventListener('click', () => {updateScreenNums("5"); updateScreen()});
-document.getElementById('num6').addEventListener('click', () => {updateScreenNums("6"); updateScreen()});
-document.getElementById('num1').addEventListener('click', () => {updateScreenNums("1"); updateScreen()});
-document.getElementById('num2').addEventListener('click', () => {updateScreenNums("2"); updateScreen()});
-document.getElementById('num3').addEventListener('click', () => {updateScreenNums("3"); updateScreen()});
-document.getElementById('num0').addEventListener('click', () => {updateScreenNums("0"); updateScreen()});
+document.getElementById('num7').addEventListener('click', () => {updateScreenNums(7)});
+document.getElementById('num8').addEventListener('click', () => {updateScreenNums(8)});
+document.getElementById('num9').addEventListener('click', () => {updateScreenNums(9)});
+document.getElementById('num4').addEventListener('click', () => {updateScreenNums(4)});
+document.getElementById('num5').addEventListener('click', () => {updateScreenNums(5)});
+document.getElementById('num6').addEventListener('click', () => {updateScreenNums(6)});
+document.getElementById('num1').addEventListener('click', () => {updateScreenNums(1)});
+document.getElementById('num2').addEventListener('click', () => {updateScreenNums(2)});
+document.getElementById('num3').addEventListener('click', () => {updateScreenNums(3)});
+document.getElementById('num0').addEventListener('click', () => {updateScreenNums(0)});
 
 //key press Listeners
 document.addEventListener('keypress', (e) =>{
     for(i = 0; i <= 9;){
         if(e.code === "Numpad"+i || e.code === "Digit"+i){
-            updateScreenNums(i); updateScreen();
+            updateScreenNums(i);
             break
                
         }else if(e.code === "NumpadAdd"){
-            operate("+"); updateScreen();
+            updateScreenNums("+")
+            break
+
+        }else if(e.code === "NumpadSubtract"){
+            updateScreenNums("-")
+            break
+
+        }else if(e.code === "NumpadMultiply"){
+            updateScreenNums("*")
+            break
+
+        }else if(e.code === "NumpadDivide"){
+            updateScreenNums("/")
             break
 
         }else if(e.code === "NumpadEnter"){
-            equals("="); updateScreen();
+            equals();;
             break
         }
         ++i;
@@ -69,33 +113,52 @@ document.addEventListener('keypress', (e) =>{
 });
 
 //Operator Functions
-document.getElementById('opPlus').addEventListener('click', () => {operate("+"); updateScreen()});
-document.getElementById('opMinus').addEventListener('click', () => {operate("-"); updateScreen()});
-document.getElementById('opTimes').addEventListener('click', () => {operate("*"); updateScreen()});
-document.getElementById('opEquals').addEventListener('click', () => {equals(); updateScreen()});
+document.getElementById('opPlus').addEventListener('click', () => {updateScreenNums("+")});
+document.getElementById('opMinus').addEventListener('click', () => {updateScreenNums("-")});
+document.getElementById('opTimes').addEventListener('click', () => {updateScreenNums("*")});
+document.getElementById('opDivide').addEventListener('click', () => {updateScreenNums("/")});
+document.getElementById('opEquals').addEventListener('click', () => {equals()});
 
-
-function operate(a){
-    screenNum = Number(screen)
-    history.push({number:screenNum, operator: a});
-
-    clear();
-}
-//let stringExpression = "";
-function equals(){
-    screenNum = Number(screen);
-    history.push({number:screenNum, operator: ''});
-
-    stringExpression = "";
-
-    for(y = 0; y < history.length;){
-        console.log("the for loop in equals " + y)
-        stringExpression = stringExpression + history[y].number + history[y].operator;
-        ++y;
-    }
+let add = (a,b) => {num1 = a + b}
+let subtract = (a,b) => {num1 = a - b}
+let divide = (a,b) => {num1 = a / b}
+let multiply = (a,b) => {num1 = a * b}
+/*
+let updateScreenNums = (a) => {
+    screen = screen + a;
     
-    equalsTotal = eval(stringExpression);
-    screen = equalsTotal;
+    document.getElementById('screen').innerHTML = screen;
+    
+    if(a === "+"){
+    	operator = add;
+      //num2 = num1;
+    }else if(a === "-"){
+    	operator = subtract;
+    }else if(a === "/"){
+    	operator = divide;
+    }else if(a === "*"){
+    	operator = multiply;
+    }else{
+    	if(num1 === undefined){
+      	num1 = a;
+        console.log(num1 + " first if");
+      }else if(num2 === undefined){
+      	num2 = a;
+        operator(num1, num2)
+        console.log(num1 + " second if");
+      }else{
+      	num2 = a;
+        operator(num1, num2)
+        console.log(num1 + " third if");
+      }
+    }
+      
+};
+
+let equals = () => {
+	total = num1;
+    screen = total;
+    document.getElementById('screen').innerHTML = screen;
 }
 
 
