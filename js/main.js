@@ -62,8 +62,9 @@ let calculate = (a) => {
             num1 = 0;
             //console.log("getting into calculate now IF +");
         }else if(a === "-"){
+            operator = subtract;
             num2 = num1;
-           	operator = subtract;
+           	
             screenCalcNum = "";
             num1 = 0;
             //console.log("getting into calculate now IF -");
@@ -92,10 +93,11 @@ let calculate = (a) => {
         operator = add;
 
     }else if(a === "-"){
+        operator = subtract;
+
         operator(num2, num1);
 
         screenCalcNum = "";
-
         //console.log("getting into 2nd calculate now IF +++++++++++++");
 
         operator = subtract;
@@ -153,23 +155,23 @@ document.addEventListener('keypress', (e) =>{
             break
                
         }else if(e.code === "NumpadAdd"){
-            updateScreenNums("+")
+            calculate("+");
             break
 
         }else if(e.code === "NumpadSubtract"){
-            updateScreenNums("-")
+            calculate("-");
             break
 
         }else if(e.code === "NumpadMultiply"){
-            updateScreenNums("*")
+            calculate("*");
             break
 
         }else if(e.code === "NumpadDivide"){
-            updateScreenNums("/")
+            calculate("/");
             break
 
         }else if(e.code === "NumpadEnter"){
-            equals();;
+            calculate("=");
             break
         }
         ++i;
@@ -189,7 +191,7 @@ let add = (a,b) => {
     console.log(num1 + " is num1 calc " + a + " is num2 " + b + " is num1 ")};
 
 let subtract = (a,b) => {
-    num2total = a - b};
+    num2Total = a - b};
     num2 = num2Total;
 let divide = (a,b) => {num1 = a / b};
 let multiply = (a,b) => {num1 = a * b};
