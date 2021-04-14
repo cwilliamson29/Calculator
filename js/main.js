@@ -57,6 +57,7 @@ document.addEventListener('keypress', (e) =>{
 //Operator Functions
 document.getElementById('opPlus').addEventListener('click', () => {operate("+"); updateScreen()});
 document.getElementById('opMinus').addEventListener('click', () => {operate("-"); updateScreen()});
+document.getElementById('opTimes').addEventListener('click', () => {operate("*"); updateScreen()});
 document.getElementById('opEquals').addEventListener('click', () => {equals(); updateScreen()});
 
 
@@ -64,10 +65,10 @@ function operate(a){
     screenNum = Number(screen)
     history.push({number:screenNum, operator: a});
 
-    if(a === "+"){
+    /*if(a === "+"){
         history[p].operator = a;
     }
-
+*/
     clr();
     ++p;
 }
