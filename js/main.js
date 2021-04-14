@@ -39,13 +39,16 @@ document.getElementById('num0').addEventListener('click', () => {updateScreenNum
 document.addEventListener('keypress', (e) =>{
     for(i = 0; i <= 9;){
         if(e.code === "Numpad"+i || e.code === "Digit"+i){
-            updateScreenNums(i); updateScreen(); 
+            updateScreenNums(i); updateScreen();
+            break
                
         }else if(e.code === "NumpadAdd"){
             operate("+"); updateScreen();
+            break
 
         }else if(e.code === "NumpadEnter"){
             equals("="); updateScreen();
+            break
         }
         ++i;
     }
