@@ -5,22 +5,35 @@ let screentotal;
 //let history = [{number:0,operator:0}];
 let history = [];
 let equalsTotal;
-let p = 0
 let stringExpression = "";
 
 //screen functions
 let updateScreen = () => {document.getElementById('screen').innerHTML = screen;}
-let clr = () => {screen = ""; screenNum = Number(screen); updateScreen()};
-let clrHistory = () => {history.length = 0; equalsTotal = undefined; p=0};
-let updateScreenNums = (a) => {screen = screen + a; screenNum = Number(screen)};
+
+let clear = () => {
+    screen = ""; 
+    screenNum = Number(screen); 
+    updateScreen()
+};
+
+let clrHistory = () => {
+    history.length = 0; 
+    equalsTotal = undefined; 
+    p=0;
+};
+
+let updateScreenNums = (a) => {
+    screen = screen + a;
+    screenNum = Number(screen)
+};
 
 document.getElementById('opEquals').addEventListener('click', () => {document.getElementById('screen').innerHTML = screenNum;})
 
 //clear the screen function
-document.getElementById('clrBtn').addEventListener('click', () => {clr(); clrHistory();});
+document.getElementById('clrBtn').addEventListener('click', () => {clear(); clrHistory();});
 document.addEventListener('keydown', (e) => {
     if(e.code === "Escape"){
-        clr(); clrHistory();
+        clear(); clrHistory();
     }
 });
 
@@ -66,12 +79,7 @@ function operate(a){
     screenNum = Number(screen)
     history.push({number:screenNum, operator: a});
 
-    /*if(a === "+"){
-        history[p].operator = a;
-    }
-*/
-    clr();
-    ++p;
+    clear();
 }
 //let stringExpression = "";
 function equals(){
