@@ -6,6 +6,7 @@ let screentotal;
 let history = [];
 let equalsTotal;
 let p = 0
+let stringExpression = "";
 
 //screen functions
 let updateScreen = () => {document.getElementById('screen').innerHTML = screen;}
@@ -72,14 +73,15 @@ function operate(a){
     clr();
     ++p;
 }
-
+//let stringExpression = "";
 function equals(){
     screenNum = Number(screen);
     history.push({number:screenNum, operator: ''});
 
-    let stringExpression = "";
+    stringExpression = "";
 
     for(y = 0; y < history.length;){
+        console.log("the for loop in equals " + y)
         stringExpression = stringExpression + history[y].number + history[y].operator;
         ++y;
     }
