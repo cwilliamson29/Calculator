@@ -1,12 +1,14 @@
 let screen = "";
-let screenNum; 
+let screenCalcNum = ""; 
 
 let screentotal;
 //let history = [{number:0,operator:0}];
 let equalsTotal;
 let stringExpression = "";
-let num1, num2, total;
+let num1 = 0;
+let num2, total;
 var operator;
+let num2Total = 0;
 
 //screen functions
 let updateScreen = () => {document.getElementById('screen').innerHTML = screen;}
@@ -19,50 +21,112 @@ let clear = () => {
     total = undefined;
     updateScreen()
 };
+let updateScreenNums = (b) => {
+    console.log("getting into updateScreenNums now");
 
-let updateScreenNums = (a) => {
-    screen = screen + a;
+    //num1 = 0;
+
+    screen = screen + b;
+    screenCalcNum = screenCalcNum + b;
+    //num1 = Number(screenCalcNum);
     
+    console.log(screenCalcNum + " getting into updateScreenNums num1 now");
     document.getElementById('screen').innerHTML = screen;
-    
-    if(a === "+"){
-    	operator = add;
-    }else if(a === "-"){
-    	operator = subtract;
-    }else if(a === "/"){
-    	operator = divide;
-    }else if(a === "*"){
-    	operator = multiply;
+};
+
+let calculate = (a) => {
+    console.log("getting into calculate now num1 " + num1);
+
+    num1 = Number(screenCalcNum)
+
+    console.log("getting into calculate AGAIN now num1 " + num1);
+
+
+    //screenCalcNum = "";
+    if(a === "="){
+        
     }else{
-    	if(num1 === undefined){
-      	num1 = a;
-        console.log(num1 + " first if");
-      }else if(num2 === undefined){
-      	num2 = a;
-        operator(num1, num2)
-        console.log(num1 + " second if");
-      }else{
-      	num2 = a;
-        operator(num1, num2)
-        console.log(num1 + " third if");
-      }
+        screen = screen + a;
+        document.getElementById('screen').innerHTML = screen;
     }
-      
+    
+
+    console.log(operator)
+    
+    if(operator === undefined){
+        if(a === "+"){
+            //num2Total = num2
+            num2 = num1;
+        	operator = add;
+            screenCalcNum = "";
+            num1 = 0;
+            console.log("getting into calculate now IF +");
+        }else if(a === "-"){
+            num2 = num1;
+           	operator = subtract;
+            screenCalcNum = "";
+            num1 = 0;
+            console.log("getting into calculate now IF -");
+        }else if(a === "/"){
+            num2 = num1;
+        	operator = divide;
+            screenCalcNum = "";
+            num1 = 0;
+            console.log("getting into calculate now IF /");
+        }else if(a === "*"){
+            num2 = num1;
+        	operator = multiply;
+            screenCalcNum = "";
+            num1 = 0;
+            console.log("getting into calculate now IF *");
+        }
+    }else if(a === "+"){
+        //num2Total = num2;
+        //num2 = num1;
+        operator(num2, num1);
+
+        screenCalcNum = "";
+
+        console.log("getting into 2nd calculate now IF +++++++++++++");
+            
+        operator = add;
+
+    }else if(a === "-"){
+        operator(num2, num1);
+
+        screenCalcNum = "";
+
+        console.log("getting into 2nd calculate now IF +++++++++++++");
+
+        operator = subtract;
+    }else if(a === "/"){
+        operator = divide;
+    }else if(a === "*"){
+        operator = multiply;
+    }else if(a === "="){
+        operator(num2, num1);
+
+        screenCalcNum = "";
+
+
+        screen = num2Total;
+        document.getElementById('screen').innerHTML = screen;
+        console.log(num2Total)
+        //console.log("getting into 2nd calculate now IF +++++++++++++");
+        //equals();
+    }
 };
 
 function equals(){
-	total = num1;
-  screen = total;
+  screen = num2Total;
   document.getElementById('screen').innerHTML = screen;
 }
-
-document.getElementById('opEquals').addEventListener('click', () => {document.getElementById('screen').innerHTML = screenNum;})
+//EQUALS LISTENER
+//document.getElementById('opEquals').addEventListener('click', () => {document.getElementById('screen').innerHTML = calculate("=");})
 
 //clear the screen function
-document.getElementById('clrBtn').addEventListener('click', () => {
-    clear(); 
-    clrHistory();
-});
+document.getElementById('clrBtn').addEventListener('click', () => {clear()});
+
 document.addEventListener('keydown', (e) => {
     if(e.code === "Escape"){
         clear();
@@ -113,125 +177,19 @@ document.addEventListener('keypress', (e) =>{
 });
 
 //Operator Functions
-document.getElementById('opPlus').addEventListener('click', () => {updateScreenNums("+")});
-document.getElementById('opMinus').addEventListener('click', () => {updateScreenNums("-")});
-document.getElementById('opTimes').addEventListener('click', () => {updateScreenNums("*")});
-document.getElementById('opDivide').addEventListener('click', () => {updateScreenNums("/")});
-document.getElementById('opEquals').addEventListener('click', () => {equals()});
+document.getElementById('opPlus').addEventListener('click', () => {calculate("+")});
+document.getElementById('opMinus').addEventListener('click', () => {calculate("-")});
+document.getElementById('opTimes').addEventListener('click', () => {calculate("*")});
+document.getElementById('opDivide').addEventListener('click', () => {calculate("/")});
+document.getElementById('opEquals').addEventListener('click', () => {calculate("=")});
 
-let add = (a,b) => {num1 = a + b}
-let subtract = (a,b) => {num1 = a - b}
-let divide = (a,b) => {num1 = a / b}
-let multiply = (a,b) => {num1 = a * b}
-/*
-let updateScreenNums = (a) => {
-    screen = screen + a;
-    
-    document.getElementById('screen').innerHTML = screen;
-    
-    if(a === "+"){
-    	operator = add;
-      //num2 = num1;
-    }else if(a === "-"){
-    	operator = subtract;
-    }else if(a === "/"){
-    	operator = divide;
-    }else if(a === "*"){
-    	operator = multiply;
-    }else{
-    	if(num1 === undefined){
-      	num1 = a;
-        console.log(num1 + " first if");
-      }else if(num2 === undefined){
-      	num2 = a;
-        operator(num1, num2)
-        console.log(num1 + " second if");
-      }else{
-      	num2 = a;
-        operator(num1, num2)
-        console.log(num1 + " third if");
-      }
-    }
-      
-};
+let add = (a,b) => {
+    num2Total = a + b; 
+    num2 = num2Total; 
+    console.log(num1 + " is num1 calc " + a + " is num2 " + b + " is num1 ")};
 
-let equals = () => {
-	total = num1;
-    screen = total;
-    document.getElementById('screen').innerHTML = screen;
-}
-
-
-/*function equals(a){
-
-    screenNum = Number(screen);
-    history.push({number:screenNum, operator: a});
-
-    let g = history.length -1;
-
-    let j = 0;
-
-    //let num1 = history[j].number;
-
-    for (j = 0; j < history.length;){
-
-        let num1 = history[j].number;
-
-        if(equalsTotal === undefined){
-            equalsTotal = num1;
-        }else{
-            if (history[j].operator === "+"){
-                equalsTotal = equalsTotal + num1;
-
-            }else if(history[j].operator === "-"){
-                equalsTotal = equalsTotal - num1;
-    
-            }else if(history[j].operator === "="){
-                equalsTotal = equalsTotal;
-            }
-        }
-
-
-        /*if (history[j].operator === "+"){
-            if(equalsTotal === undefined){
-                equalsTotal = num1;
-            }else{
-                equalsTotal = equalsTotal + num1;
-            }
-        }else if(history[j].operator === "-"){
-            equalsTotal = equalsTotal - num1;
-
-        }else if(history[j].operator === "="){
-            equalsTotal = equalsTotal + num1;
-        }
-        ++j
-    }
-    console.log(equalsTotal);
-    screen = equalsTotal;
-}*/
-/*
-//add 2 numbers together
-let add = (a, b) => {screenTotal = a + b;};
-
-//subtract 2 numbers
-let sub = (a, b) => {screenTotal = a - b;};
-
-//multiply 2 numbers
-let multiply = (a, b) => {screenTotal = a * b;};
-
-//subtract 2 numbers
-let divide = (a, b) => {screenTotal = a / b;};
-
-
-function calculate(a, callback){
-    
-}
-*/
-//for detecting keys pressed
-/*document.addEventListener('keydown', (e) =>{
-    keyp = ` ${e.key}`;
-    console.log(keyp);
-})*/
-
-
-
+let subtract = (a,b) => {
+    num2total = a - b};
+    num2 = num2Total;
+let divide = (a,b) => {num1 = a / b};
+let multiply = (a,b) => {num1 = a * b};
