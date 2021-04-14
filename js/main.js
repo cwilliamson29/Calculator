@@ -22,7 +22,7 @@ let clear = () => {
     updateScreen()
 };
 let updateScreenNums = (b) => {
-    console.log("getting into updateScreenNums now");
+    //console.log("getting into updateScreenNums now");
 
     //num1 = 0;
 
@@ -30,16 +30,16 @@ let updateScreenNums = (b) => {
     screenCalcNum = screenCalcNum + b;
     //num1 = Number(screenCalcNum);
     
-    console.log(screenCalcNum + " getting into updateScreenNums num1 now");
+    //console.log(screenCalcNum + " getting into updateScreenNums num1 now");
     document.getElementById('screen').innerHTML = screen;
 };
 
 let calculate = (a) => {
-    console.log("getting into calculate now num1 " + num1);
+    //console.log("getting into calculate now num1 " + num1);
 
     num1 = Number(screenCalcNum)
 
-    console.log("getting into calculate AGAIN now num1 " + num1);
+    //console.log("getting into calculate AGAIN now num1 " + num1);
 
 
     //screenCalcNum = "";
@@ -51,7 +51,7 @@ let calculate = (a) => {
     }
     
 
-    console.log(operator)
+    //console.log(operator)
     
     if(operator === undefined){
         if(a === "+"){
@@ -60,13 +60,13 @@ let calculate = (a) => {
         	operator = add;
             screenCalcNum = "";
             num1 = 0;
-            console.log("getting into calculate now IF +");
+            //console.log("getting into calculate now IF +");
         }else if(a === "-"){
             num2 = num1;
            	operator = subtract;
             screenCalcNum = "";
             num1 = 0;
-            console.log("getting into calculate now IF -");
+            //console.log("getting into calculate now IF -");
         }else if(a === "/"){
             num2 = num1;
         	operator = divide;
@@ -87,7 +87,7 @@ let calculate = (a) => {
 
         screenCalcNum = "";
 
-        console.log("getting into 2nd calculate now IF +++++++++++++");
+        //console.log("getting into 2nd calculate now IF +++++++++++++");
             
         operator = add;
 
@@ -96,7 +96,7 @@ let calculate = (a) => {
 
         screenCalcNum = "";
 
-        console.log("getting into 2nd calculate now IF +++++++++++++");
+        //console.log("getting into 2nd calculate now IF +++++++++++++");
 
         operator = subtract;
     }else if(a === "/"){
