@@ -35,17 +35,17 @@ html, body {
 }
 #calc-outside1{
     width: 362px;
-    height: 512px;
+    min-height: 512px;
 }
 #calc-outside2{
     width:356px;
-    height: 506px;
+    min-height: 506px;
     border: 2px dotted black;
     background-color: rgb(78, 78, 78);
 }
 #calc-outside3{
     width:350px;
-    height: 500px;
+    min-height: 500px;
     align-items: none;
 }
 #calcHeader{
@@ -75,13 +75,14 @@ html, body {
     font-size: 13px;;
 }
 #displayScreen{
+    overflow:hidden;+
     border: 2px solid rgb(54, 54, 54);
     border-radius: 7px;
     margin: auto;
     margin-top: 5px;;
     padding-right: 5px;
     width: 95%;
-    height: 60px;
+    min-height: 60px;
     background-color: black;
     color: lawngreen;
     font-family: 'press_start_2pregular';
