@@ -2,7 +2,9 @@ let displayScreen = document.getElementById('displayScreen');
 let numberButtons = document.getElementsByClassName('numBtn');
 let operatorButtons = document.getElementsByClassName('opBtn');
 
-let screenTotal, inputNumber1, inputNumber2;
+document.getElementById('opEquals').addEventListener('click', () => {equals()});
+
+let screenTotal, inputNumber1, inputNumber2, total;
 let operatorInput = [''];
 let displayContent = '';
 let contentContainer = '';
@@ -40,7 +42,24 @@ function calculate(){
         add(inputNumber1, inputNumber2);
     }else if(operatorInput[0] === "-"){
         minus(inputNumber1, inputNumber2);
+    }else if(operatorInput[0] === "X"){
+        multiply(inputNumber1, inputNumber2);
+    }else if(operatorInput[0] === "/"){
+        if(inputNumber2 === 0){
+            clearDisplayScreen();
+            alert("I'm sorry, Dave, I'm afraid I can't do that!");
+        }else{
+            divide(inputNumber1, inputNumber2);
+        }
+        
     }
+}
+function equals(){
+    updateInputNumbers();
+    total = inputNumber1;
+    clearDisplayScreen();
+    
+    displayScreen.textContent = total;
 }
 function updateDisplay(){
     let endof = displayContent.length - 1;
@@ -103,9 +122,17 @@ let minus = (a,b) => {
 };
 let multiply = (a,b) => {
     screenTotal = a * b;
+    inputNumber1 = screenTotal;
+    screenTotal = undefined;
+    inputNumber2 = undefined;
+    contentContainer = '';
 };
 let divide = (a,b) => {
     screenTotal = a / b;
+    inputNumber1 = screenTotal;
+    screenTotal = undefined;
+    inputNumber2 = undefined;
+    contentContainer = '';
 };
 /*
 
