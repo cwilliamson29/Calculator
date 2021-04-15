@@ -1,7 +1,6 @@
 let displayScreen = document.getElementById('displayScreen');
 let numberButtons = document.getElementsByClassName('numBtn');
 let operatorButtons = document.getElementsByClassName('opBtn');
-
 document.getElementById('opEquals').addEventListener('click', () => {equals()});
 
 let screenTotal, inputNumber1, inputNumber2, total;
@@ -24,14 +23,12 @@ for(let x = 0; x < operatorButtons.length;){
         updateDisplay();
     });
     ++x;
-    
 }
 function updateInputNumbers(){
     if(inputNumber1 === undefined){
         inputNumber1 = Number(contentContainer);
         contentContainer = "";
     }else if(inputNumber2 === undefined){
-        console.log("getting into && IF")
         inputNumber2 = Number(contentContainer);
         calculate();
     }
@@ -58,7 +55,6 @@ function equals(){
     updateInputNumbers();
     total = inputNumber1;
     clearDisplayScreen();
-    
     displayScreen.textContent = total;
 }
 function updateDisplay(){
@@ -70,7 +66,6 @@ function updateDisplay(){
        displayContent[endof] === "/"){
 
         displayContent = displayContent.slice(0, -1);
-
         displayContent += operatorInput[0]; 
         displayScreen.textContent = displayContent;
     }else{
@@ -91,7 +86,50 @@ function clearDisplayScreen(){
 }
 //clear the screen function
 document.getElementById('clrBtn').addEventListener('click', () => {clearDisplayScreen()});
+function keypressPut(w){
+    displayContent += w; 
+    contentContainer += w;
+    displayScreen.textContent = displayContent;
+}
+function operatorKeypressPut(w){
+        updateInputNumbers();
+        operatorInput[0] = w;
+        updateDisplay()
+}
+document.addEventListener('keypress', (e) =>{
+    for(w = 0; w <= 9;){
+        console.log(e.code)
+        if(e.code === "Numpad"+w || e.code === "Digit"+w){
+            keypressPut(w);
+            break
 
+        }else if(e.code === "NumpadDecimal"){
+            keypressPut(".");
+            break
+
+        }else if(e.code === "NumpadAdd"){
+            operatorKeypressPut("+");
+            break
+
+        }else if(e.code === "NumpadSubtract"){
+            operatorKeypressPut("-");
+            break
+
+        }else if(e.code === "NumpadMultiply"){
+            operatorKeypressPut("X");
+            break
+
+        }else if(e.code === "NumpadDivide"){
+            operatorKeypressPut("/");
+            break
+
+        }else if(e.code === "NumpadEnter"){
+            equals();
+            break
+        }
+    ++w;
+    }
+});
 document.addEventListener('keydown', (e) => {
     if(e.code === "Escape"){
         clearDisplayScreen();
@@ -134,41 +172,3 @@ let divide = (a,b) => {
     inputNumber2 = undefined;
     contentContainer = '';
 };
-/*
-
-//key press Listeners
-document.addEventListener('keypress', (e) =>{
-    for(y = 0; y <= 9;){
-        if(e.code === "Numpad"+y || e.code === "Digit"+y){
-            numberButtons[y].addEventListener('click', (e) => {
-                operatorInput += e.target.textContent; 
-                displayScreen.textContent = operatorInput;
-            });
-            break
-               
-        }else if(e.code === "NumpadAdd"){
-            break
-
-        }else if(e.code === "NumpadSubtract"){
-            break
-
-        }else if(e.code === "NumpadMultiply"){
-            break
-
-        }else if(e.code === "NumpadDivide"){
-            break
-
-        }else if(e.code === "NumpadEnter"){
-            break
-        }
-        ++y;
-    }
-});
-/*
-//Operator Functions
-document.getElementById('opPlus').addEventListener('click', () => {});
-document.getElementById('opMinus').addEventListener('click', () => {});
-document.getElementById('opTimes').addEventListener('click', () => {});
-document.getElementById('opDivide').addEventListener('click', () => {});
-document.getElementById('opEquals').addEventListener('click', () => {});
-*/
