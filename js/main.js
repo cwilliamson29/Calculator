@@ -8,21 +8,21 @@ let operatorInput = [''];
 let displayContent = '';
 let contentContainer = '';
 
-for(let z = 0; z < numberButtons.length;){
-    numberButtons[z].addEventListener('click', (e) => {
+for(let i = 0; i < numberButtons.length;){
+    numberButtons[i].addEventListener('click', (e) => {
         displayContent += e.target.textContent; 
         contentContainer += e.target.textContent;
         displayScreen.textContent = displayContent;
     });
-    ++z;
+    ++i;
 }
-for(let x = 0; x < operatorButtons.length;){
-    operatorButtons[x].addEventListener('click', (e,) => {
+for(let i = 0; i < operatorButtons.length;){
+    operatorButtons[i].addEventListener('click', (e,) => {
         updateInputNumbers();
         operatorInput[0] = e.target.textContent;
         updateDisplay();
     });
-    ++x;
+    ++i;
 }
 function updateInputNumbers(){
     if(inputNumber1 === undefined){
@@ -86,21 +86,22 @@ function clearDisplayScreen(){
 }
 //clear the screen function
 document.getElementById('clrBtn').addEventListener('click', () => {clearDisplayScreen()});
-function keypressPut(w){
-    displayContent += w; 
-    contentContainer += w;
+function keypressPut(num){
+    displayContent += num; 
+    contentContainer += num;
     displayScreen.textContent = displayContent;
 }
-function operatorKeypressPut(w){
+function operatorKeypressPut(opKey){
         updateInputNumbers();
-        operatorInput[0] = w;
+        operatorInput[0] = opKey;
         updateDisplay();
 }
+
 document.addEventListener('keypress', (e) =>{
-    for(w = 0; w <= 9;){
+    for(let i = 0; i <= 9;){
         //console.log(e.code)
-        if(e.code === "Numpad"+w || e.code === "Digit"+w){
-            keypressPut(w);
+        if(e.code === "Numpad"+i || e.code === "Digit"+i){
+            keypressPut(i);
             break
 
         }else if(e.code === "NumpadDecimal"){
@@ -127,16 +128,17 @@ document.addEventListener('keypress', (e) =>{
             equals();
             break
         }
-    ++w;
+    ++i;
     }
 });
+
 document.addEventListener('keydown', (e) => {
     if(e.code === "Escape"){
         clearDisplayScreen();
     }
 });
 
-function saveInputNumbers(a){
+function saveInputNumbers(){
     if(typeof inputNumber1 === "number"){
         inputNumber1 = Number(displayContent);
         operator[0] = 0;
