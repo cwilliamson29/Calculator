@@ -76,8 +76,8 @@ function updateDisplay(){
 }
 function clearDisplayScreen(){
     screenTotal = undefined;
-    inputNumber1 = undefined;;
-    inputNumber2 = undefined;;
+    inputNumber1 = undefined;
+    inputNumber2 = undefined;
     operatorInput = [''];
     displayContent = '';
     contentContainer = '';
@@ -94,11 +94,11 @@ function keypressPut(w){
 function operatorKeypressPut(w){
         updateInputNumbers();
         operatorInput[0] = w;
-        updateDisplay()
+        updateDisplay();
 }
 document.addEventListener('keypress', (e) =>{
     for(w = 0; w <= 9;){
-        console.log(e.code)
+        //console.log(e.code)
         if(e.code === "Numpad"+w || e.code === "Digit"+w){
             keypressPut(w);
             break
@@ -139,36 +139,29 @@ document.addEventListener('keydown', (e) => {
 function saveInputNumbers(a){
     if(typeof inputNumber1 === "number"){
         inputNumber1 = Number(displayContent);
-        operator[0] = 0
+        operator[0] = 0;
     }
 
 }
-
-let add = (a,b) => {
-    screenTotal = a + b;
+function operatorClearScreen(){
     inputNumber1 = screenTotal;
     screenTotal = undefined;
     inputNumber2 = undefined;
     contentContainer = '';
+};
+let add = (a,b) => {
+    screenTotal = a + b;
+    operatorClearScreen();
 };
 let minus = (a,b) => {
     screenTotal = a - b;
-    inputNumber1 = screenTotal;
-    screenTotal = undefined;
-    inputNumber2 = undefined;
-    contentContainer = '';
+    operatorClearScreen();
 };
 let multiply = (a,b) => {
     screenTotal = a * b;
-    inputNumber1 = screenTotal;
-    screenTotal = undefined;
-    inputNumber2 = undefined;
-    contentContainer = '';
+    operatorClearScreen();
 };
 let divide = (a,b) => {
     screenTotal = a / b;
-    inputNumber1 = screenTotal;
-    screenTotal = undefined;
-    inputNumber2 = undefined;
-    contentContainer = '';
+    operatorClearScreen();
 };
