@@ -101,8 +101,12 @@ let minus = (a,b) => {
     inputNumber2 = undefined;
     contentContainer = '';
 };
-let multiply = (a,b) => {screenTotal = a * b};
-let divide = (a,b) => {screenTotal = a / b};
+let multiply = (a,b) => {
+    screenTotal = a * b;
+};
+let divide = (a,b) => {
+    screenTotal = a / b;
+};
 /*
 
 //key press Listeners
