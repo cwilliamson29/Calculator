@@ -1,197 +1,143 @@
-let screen = "";
-let screenCalcNum = ""; 
+let displayScreen = document.getElementById('displayScreen');
+let numberButtons = document.getElementsByClassName('numBtn');
+let operatorButtons = document.getElementsByClassName('opBtn');
 
-let screentotal;
-//let history = [{number:0,operator:0}];
-let equalsTotal;
-let stringExpression = "";
-let num1 = 0;
-let num2, total;
-var operator;
-let num2Total = 0;
+let screenTotal, inputNumber1, inputNumber2;
+let operatorInput = [''];
+let displayContent = '';
+let contentContainer = '';
 
-//screen functions
-let updateScreen = () => {document.getElementById('screen').innerHTML = screen;}
-
-let clear = () => {
-    screen = ""; 
-    screenNum = Number(screen);
-    num1 = undefined;
-    num2 = undefined;
-    total = undefined;
-    updateScreen()
-};
-let updateScreenNums = (b) => {
-    //console.log("getting into updateScreenNums now");
-
-    //num1 = 0;
-
-    screen = screen + b;
-    screenCalcNum = screenCalcNum + b;
-    //num1 = Number(screenCalcNum);
-    
-    //console.log(screenCalcNum + " getting into updateScreenNums num1 now");
-    document.getElementById('screen').innerHTML = screen;
-};
-
-let calculate = (a) => {
-    //console.log("getting into calculate now num1 " + num1);
-
-    num1 = Number(screenCalcNum)
-
-    //console.log("getting into calculate AGAIN now num1 " + num1);
-
-
-    //screenCalcNum = "";
-    if(a === "="){
-        
-    }else{
-        screen = screen + a;
-        document.getElementById('screen').innerHTML = screen;
-    }
-    
-
-    //console.log(operator)
-    
-    if(operator === undefined){
-        if(a === "+"){
-            //num2Total = num2
-            num2 = num1;
-        	operator = add;
-            screenCalcNum = "";
-            num1 = 0;
-            //console.log("getting into calculate now IF +");
-        }else if(a === "-"){
-            operator = subtract;
-            num2 = num1;
-           	
-            screenCalcNum = "";
-            num1 = 0;
-            //console.log("getting into calculate now IF -");
-        }else if(a === "/"){
-            num2 = num1;
-        	operator = divide;
-            screenCalcNum = "";
-            num1 = 0;
-            console.log("getting into calculate now IF /");
-        }else if(a === "*"){
-            num2 = num1;
-        	operator = multiply;
-            screenCalcNum = "";
-            num1 = 0;
-            console.log("getting into calculate now IF *");
-        }
-    }else if(a === "+"){
-        //num2Total = num2;
-        //num2 = num1;
-        operator(num2, num1);
-
-        screenCalcNum = "";
-
-        //console.log("getting into 2nd calculate now IF +++++++++++++");
-            
-        operator = add;
-
-    }else if(a === "-"){
-        operator = subtract;
-
-        operator(num2, num1);
-
-        screenCalcNum = "";
-        //console.log("getting into 2nd calculate now IF +++++++++++++");
-
-        operator = subtract;
-    }else if(a === "/"){
-        operator = divide;
-    }else if(a === "*"){
-        operator = multiply;
-    }else if(a === "="){
-        operator(num2, num1);
-
-        screenCalcNum = "";
-
-
-        screen = num2Total;
-        document.getElementById('screen').innerHTML = screen;
-        console.log(num2Total)
-        //console.log("getting into 2nd calculate now IF +++++++++++++");
-        //equals();
-    }
-};
-
-function equals(){
-  screen = num2Total;
-  document.getElementById('screen').innerHTML = screen;
+for(let z = 0; z < numberButtons.length;){
+    numberButtons[z].addEventListener('click', (e) => {
+        displayContent += e.target.textContent; 
+        contentContainer += e.target.textContent;
+        displayScreen.textContent = displayContent;
+    });
+    ++z;
 }
-//EQUALS LISTENER
-//document.getElementById('opEquals').addEventListener('click', () => {document.getElementById('screen').innerHTML = calculate("=");})
+for(let x = 0; x < operatorButtons.length;){
+    operatorButtons[x].addEventListener('click', (e,) => {
+        updateInputNumbers();
+        operatorInput[0] = e.target.textContent;
+        updateDisplay();
+    });
+    ++x;
+    
+}
+function updateInputNumbers(){
+    if(inputNumber1 === undefined){
+        inputNumber1 = Number(contentContainer);
+        contentContainer = "";
+    }else if(inputNumber2 === undefined){
+        console.log("getting into && IF")
+        inputNumber2 = Number(contentContainer);
+        calculate();
+    }
+    
+}
+function calculate(){
+    if(operatorInput[0] === "+"){
+        add(inputNumber1, inputNumber2);
+    }else if(operatorInput[0] === "-"){
+        minus(inputNumber1, inputNumber2);
+    }
+}
+function updateDisplay(){
+    let endof = displayContent.length - 1;
+    
+    if(displayContent[endof] === "+" ||
+       displayContent[endof] === "-" ||
+       displayContent[endof] === "X" ||
+       displayContent[endof] === "/"){
 
+        displayContent = displayContent.slice(0, -1);
+
+        displayContent += operatorInput[0]; 
+        displayScreen.textContent = displayContent;
+    }else{
+        displayContent += operatorInput[0]; 
+        displayScreen.textContent = displayContent;
+    }
+    
+}
+function clearDisplayScreen(){
+    screenTotal = undefined;
+    inputNumber1 = undefined;;
+    inputNumber2 = undefined;;
+    operatorInput = [''];
+    displayContent = '';
+    contentContainer = '';
+
+    displayScreen.textContent = displayContent;
+}
 //clear the screen function
-document.getElementById('clrBtn').addEventListener('click', () => {clear()});
+document.getElementById('clrBtn').addEventListener('click', () => {clearDisplayScreen()});
 
 document.addEventListener('keydown', (e) => {
     if(e.code === "Escape"){
-        clear();
+        clearDisplayScreen();
     }
 });
 
-//Div Click Listeners
-document.getElementById('num7').addEventListener('click', () => {updateScreenNums(7)});
-document.getElementById('num8').addEventListener('click', () => {updateScreenNums(8)});
-document.getElementById('num9').addEventListener('click', () => {updateScreenNums(9)});
-document.getElementById('num4').addEventListener('click', () => {updateScreenNums(4)});
-document.getElementById('num5').addEventListener('click', () => {updateScreenNums(5)});
-document.getElementById('num6').addEventListener('click', () => {updateScreenNums(6)});
-document.getElementById('num1').addEventListener('click', () => {updateScreenNums(1)});
-document.getElementById('num2').addEventListener('click', () => {updateScreenNums(2)});
-document.getElementById('num3').addEventListener('click', () => {updateScreenNums(3)});
-document.getElementById('num0').addEventListener('click', () => {updateScreenNums(0)});
+function saveInputNumbers(a){
+    if(typeof inputNumber1 === "number"){
+        inputNumber1 = Number(displayContent);
+        operator[0] = 0
+    }
+
+}
+
+let add = (a,b) => {
+    screenTotal = a + b;
+    inputNumber1 = screenTotal;
+    screenTotal = undefined;
+    inputNumber2 = undefined;
+    contentContainer = '';
+};
+let minus = (a,b) => {
+    screenTotal = a - b;
+    inputNumber1 = screenTotal;
+    screenTotal = undefined;
+    inputNumber2 = undefined;
+    contentContainer = '';
+};
+let multiply = (a,b) => {screenTotal = a * b};
+let divide = (a,b) => {screenTotal = a / b};
+/*
 
 //key press Listeners
 document.addEventListener('keypress', (e) =>{
-    for(i = 0; i <= 9;){
-        if(e.code === "Numpad"+i || e.code === "Digit"+i){
-            updateScreenNums(i);
+    for(y = 0; y <= 9;){
+        if(e.code === "Numpad"+y || e.code === "Digit"+y){
+            numberButtons[y].addEventListener('click', (e) => {
+                operatorInput += e.target.textContent; 
+                displayScreen.textContent = operatorInput;
+            });
             break
                
         }else if(e.code === "NumpadAdd"){
-            calculate("+");
             break
 
         }else if(e.code === "NumpadSubtract"){
-            calculate("-");
             break
 
         }else if(e.code === "NumpadMultiply"){
-            calculate("*");
             break
 
         }else if(e.code === "NumpadDivide"){
-            calculate("/");
             break
 
         }else if(e.code === "NumpadEnter"){
-            calculate("=");
             break
         }
-        ++i;
+        ++y;
     }
 });
-
+/*
 //Operator Functions
-document.getElementById('opPlus').addEventListener('click', () => {calculate("+")});
-document.getElementById('opMinus').addEventListener('click', () => {calculate("-")});
-document.getElementById('opTimes').addEventListener('click', () => {calculate("*")});
-document.getElementById('opDivide').addEventListener('click', () => {calculate("/")});
-document.getElementById('opEquals').addEventListener('click', () => {calculate("=")});
-
-let add = (a,b) => {
-    num2Total = a + b; 
-    num2 = num2Total; 
-    console.log(num1 + " is num1 calc " + a + " is num2 " + b + " is num1 ")};
-
-let subtract = (a,b) => {
-    num2Total = a - b};
-    num2 = num2Total;
-let divide = (a,b) => {num1 = a / b};
-let multiply = (a,b) => {num1 = a * b};
+document.getElementById('opPlus').addEventListener('click', () => {});
+document.getElementById('opMinus').addEventListener('click', () => {});
+document.getElementById('opTimes').addEventListener('click', () => {});
+document.getElementById('opDivide').addEventListener('click', () => {});
+document.getElementById('opEquals').addEventListener('click', () => {});
+*/
